@@ -7,7 +7,7 @@
   - **<font size="3" style="font-family:STFangsong" color=gray>Spring Cloud</font>**
 - **<font size="4" style="font-family:STFangsong" color=gray>[数据库](mynotes/数据库/MySQL/AAA-MySQL面试题)</font>**
 - **<font size="4" style="font-family:STFangsong" color=gray>中间件</font>**
-  - **<font size="3" style="font-family:STFangsong" color=gray>Redis</font>**
+  - **<font size="3" style="font-family:STFangsong" color=gray>[Redis](mynotes/数据库/Redis/AAA-Redis面试题)</font>**
   - **<font size="3" style="font-family:STFangsong" color=gray>RabbitMQ</font>**
 - **<font size="4" style="font-family:STFangsong" color=gray>操作系统</font>**
 - **<font size="4" style="font-family:STFangsong" color=gray>JVM</font>**
