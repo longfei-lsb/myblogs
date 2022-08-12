@@ -1,6 +1,22 @@
 \* [mynotes](mynotes) 
 
-* [<font size = '5' color = 'pink'>Java基础</font>](/mynotes/数据库.md)
+* [<font size = '5' color = 'pink'>Java基础</font>](/mynotes/Java基础.md)
+  * <font size = '4' color = 'pink'>线程池原理</font>
+    * [线程池分析（1）｜FutureTask源码解析](/mynotes/Java基础/线程池原理/线程池分析（1）｜FutureTask源码解析.md)
+    * [线程池分析（2）｜CompletionService源码解析](/mynotes/Java基础/线程池原理/线程池分析（2）｜CompletionService源码解析.md)
+    * [线程池分析（3）｜AbstractExecutorService源码解析](/mynotes/Java基础/线程池原理/线程池分析（3）｜AbstractExecutorService源码解析.md)
+    * [线程池分析（4）｜AQS源码解析](/mynotes/Java基础/线程池原理/线程池分析（4）｜AQS源码解析.md)
+    * [线程池分析（5）｜AQS$Condition源码解析](/mynotes/Java基础/线程池分析（5）｜AQS$Condition源码解析.md)
+
+  * <font size = '4' color = 'pink'>HashMap</font>
+    * [HashMap面试题](/mynotes/Java基础/HashMap/AAA-HashMap面试题.md)
+    * [HashMap为什么两倍扩容](/mynotes/Java基础/HashMap/01-HashMap为什么两倍扩容.md)
+    * [ConcurrentHashMap扩容](/mynotes/Java基础/HashMap/02-ConcurrentHashMap扩容.md)
+
+  * <font size = '4' color = 'pink'>JUC</font>
+    * [JUC面试题](/mynotes/Java基础/JUC/AAA-JUC面试题.md)
+    * [sychorinzed原理](/mynotes/Java基础/JUC/sychorinzed原理.md)
+
 * [<font size = '5' color = 'pink'>数据库</font>](/mynotes/数据库.md)
   * <font size = '4' color = 'pink'>MySQL</font>
     * [MySQL面试题](/mynotes/数据库/MySQL/AAA-MySQL面试题)
