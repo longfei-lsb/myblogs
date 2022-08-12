@@ -31,7 +31,7 @@ do
     then
         continue
     else
-        C1=`echo $dir | cut -f2 -d '/'`
+        C1=`echo $dir | cut -f2 -d '/'` # -f2：显示按照"/"分割后的第二个元素
         echo "- $C1" | cut -f2 -d '/' >> _sidebar.md
         getdir `echo $dir | sed s'/.$//'`
     fi
