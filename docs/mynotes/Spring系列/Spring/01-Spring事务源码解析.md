@@ -671,3 +671,5 @@ protected TransactionAttribute parseTransactionAnnotation(AnnotationAttributes a
    return rbta;
 }
 ```
+
+https://zhuanlan.zhihu.com/p/371984078

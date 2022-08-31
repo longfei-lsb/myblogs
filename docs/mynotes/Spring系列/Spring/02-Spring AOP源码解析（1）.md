@@ -1,8 +1,8 @@
-# Spring AOP源码解析
+# Spring AOP源码解析（1）
 
 [TOC]
 
-## 顶层接口与类的分析
+## 顶层接口分析
 
 ### 介绍
 
@@ -121,6 +121,23 @@ public interface MethodInterceptor extends Interceptor {
 }
 ```
 
+#### 其他通知类型
+
+```java
+public interface BeforeAdvice extends Advice{}// 前置通知规范接口，内部无实现
+public interface AfterAdvice extends Advice {}// 后置通知规范接口，内部无实现
+public interface ThrowsAdvice extends AfterAdvice{}// 异常后通知规范接口，内部无实现
+// 方法调用后正常通知规范接口，内部无实现
+public interface AfterReturningAdvice extends AfterAdvice {
+  // 根据返回的值，方法，类，参数进行增强
+  void afterReturning(@Nullable Object returnValue, Method method, Object[] args, @Nullable Object target) throws Throwable;
+}
+// 方法前通知
+public interface MethodBeforeAdvice extends BeforeAdvice {
+  void before(Method method, Object[] args, @Nullable Object target) throws Throwable;
+}
+```
+
 ### Pointcut
 
 > 用来标注在方法上来定义切入点
@@ -150,14 +167,61 @@ public interface ClassFilter {
 
 #### MethodMatcher
 
+> MethodMatcher 通过重载，定义了两个 matches 方法，而这两个方法的分界线就是 isRuntime 方法，这里要特别注意！
+>
+> 注意到三参数的matches方法中，最后一个参数是args，因此也就可以想到：两个 mathcers 方法的区别在于，在进行方法拦截
+>
+> 的时候，是否匹配方法的参数
+>
+> 　　比如：现在要对 登录方法 login(String username, String passwod) 进行拦截 
+> 　　1. 只想在 login 方法之前插入计数功能，那么 login 方法的参数对于 Joinpoint 捕捉就是可以忽略的。 
+> 　　1.  在用户登录的时候对某个用户做单独处理（拒绝登录 或 给予特殊权限），那么方法的参数在匹配 Joinpoint 时必须要考虑到**
+>
+> 　　**根据是否对方法的参数进行匹配，Pointcut可以分为StaticMethodMatcher和DynamicMethodMatcher**
+>
+> **当isRuntime()返回false**，表明不对参数进行匹配，为StaticMethodMatcher，返回true时，表示要对参数进行匹配，为DynamicMethodMatcher
+> 　　**一般情况下，DynamicMethodMatcher会影响性能，所以我们一般使用StaticMethodMatcher就行了**
+
 ```java
 public interface MethodMatcher {
   // 是否匹配
   boolean matches(Method method, Class<?> targetClass);
-  // 是否动态
-  boolean isRuntime();
   boolean matches(Method method, Class<?> targetClass, Object... args);
+  // 是否运行时
+  boolean isRuntime();
   // 匹配所有方法的规范实例
   MethodMatcher TRUE = TrueMethodMatcher.INSTANCE;
+}
+```
+
+##### StaticMethodMatcher
+
+> 不关心运行时的参数
+
+```java
+public abstract class StaticMethodMatcher implements MethodMatcher {
+  // false表示，不需要匹配方法的参数
+  public final boolean isRuntime() {
+		return false;
+	}
+  public final boolean matches(Method method, Class<?> targetClass, Object... args) {
+		// should never be invoked because isRuntime() returns false
+		throw new UnsupportedOperationException("Illegal MethodMatcher usage");
+	}
+}
+```
+
+##### DynamicMethodMatcher
+
+> 关心运行时的参数（care about arguments at runtime）
+
+```java
+public abstract class DynamicMethodMatcher implements MethodMatcher {
+public final boolean isRuntime() {
+		return true;
+	}
+  public boolean matches(Method method, Class<?> targetClass) {
+		return true;
+	}
 }
 ```

@@ -2,7 +2,7 @@
 
 [TOC]
 
-## <font size = '4' color = 'pink'>什么是Spring的IOP？</font>
+## <font size = '4' color = 'pink'>什么是Spring的AOP？</font>
 
 > AOP(Aspect-Oriented Programming)是面向切面编程
 >
