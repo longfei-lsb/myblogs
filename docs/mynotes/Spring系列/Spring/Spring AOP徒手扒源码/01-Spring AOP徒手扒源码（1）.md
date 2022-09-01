@@ -190,7 +190,7 @@ public interface MethodInterceptor extends Interceptor {
 
 #### 预览
 
-![image-20220901213324008](/Users/lishanbiao/Library/Application Support/typora-user-images/image-20220901213324008.png)
+![image-20220901213324008](https://tva1.sinaimg.cn/large/e6c9d24ely1h5rfqz6qixj20iw0ju75a.jpg)
 
 > model 包作用：基于接口的动态代理
 
