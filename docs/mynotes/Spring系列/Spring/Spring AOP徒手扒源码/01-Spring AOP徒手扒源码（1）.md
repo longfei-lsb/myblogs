@@ -192,6 +192,8 @@ public interface MethodInterceptor extends Interceptor {
 
 ![image-20220901213324008](https://tva1.sinaimg.cn/large/e6c9d24ely1h5rfqz6qixj20iw0ju75a.jpg)
 
+#### 实践代码
+
 > model 包作用：基于接口的动态代理
 
 ```java
@@ -398,3 +400,9 @@ log advice success!
 来看下updateUser是否有AOP
 other res: update success
 ```
+
+### 总结
+
+- **通知时机需要抽象化：**我们可以看到我们虽然是对`addUser`方法做了通知增强，但是我们应该知道AOP中具体定义了通知的时机（前置通知、后置通知、方法返回后通知、异常后通知等等），这使得我们只是实现这些代表着运行时通知时机的接口，就可以完成相应的通知
+- **切入点需要抽象化：**对于拦截方法的过滤，我们希望可以尽量从简，不侵入的的方式达到目的，所以后续也会需要切入点的抽象
+
