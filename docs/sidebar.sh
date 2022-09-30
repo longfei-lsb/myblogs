@@ -39,8 +39,13 @@ do
     then
         continue
     else
-        C1=`echo $dir | cut -f2 -d '/'` # -f2：显示按照"/"分割后的第二个元素
-        echo "- <font size = '5'>$C1</font>" >> _sidebar.md
-        getdir `echo $dir | sed s'/.$//'`
+        if [ "$dir" = "mynotes/公司/" ];
+        then
+            continue
+        else
+            C1=`echo $dir | cut -f2 -d '/'` # -f2：显示按照"/"分割后的第二个元素
+            echo "- <font size = '5'>$C1</font>" >> _sidebar.md
+            getdir `echo $dir | sed s'/.$//'`
+        fi
     fi
 done
