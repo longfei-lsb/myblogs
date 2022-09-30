@@ -1,4 +1,4 @@
-# 03-接口
+# 02-生产者Java客户端
 
 [TOC]
 
@@ -110,4 +110,5 @@ producer.send(new ProducerRecord<byte[],byte[]>(topic, partition, key2, value2),
 
 **注意：**`callback`一般在生产者的`I/O`线程中执行，所以是相当的快的，如果执行时间太长，将阻塞延迟其他的线程的消息发送。
 
-如果回调很昂贵，建议在callback主体中使用自己的`Executor`来并行处理
+如果回调很昂贵，建议在`callback`主体中使用自己的`Executor`来并行处理
+
