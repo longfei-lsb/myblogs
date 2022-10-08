@@ -22,8 +22,16 @@
 - <font size = '3'>Kafka</font>
   - [<font color = 'pink'>01-介绍</font>](./mynotes/Kafka/01-介绍.md)
   - [<font color = 'pink'>02-Docker安装Kafka</font>](./mynotes/Kafka/02-Docker安装Kafka.md)
-  - [<font color = 'pink'>03-接口</font>](./mynotes/Kafka/03-接口.md)
+  - [<font color = 'pink'>03-配置</font>](./mynotes/Kafka/03-配置.md)
   - [<font color = 'pink'>AAA-Kafka面试题</font>](./mynotes/Kafka/AAA-Kafka面试题.md)
+  - <font size = '3'>接口</font>
+    - [<font color = 'pink'>01-生产者Java客户端</font>](./mynotes/Kafka/接口/01-生产者Java客户端.md)
+    - [<font color = 'pink'>02-消费者Java客户端</font>](./mynotes/Kafka/接口/02-消费者Java客户端.md)
+    - [<font color = 'pink'>03-KafkaStreams客户端</font>](./mynotes/Kafka/接口/03-KafkaStreams客户端.md)
+    - [<font color = 'pink'>04-Kafka Connect API</font>](./mynotes/Kafka/接口/04-Kafka%20Connect%20API.md)
+    - [<font color = 'pink'>05-Kafka Admin API</font>](./mynotes/Kafka/接口/05-Kafka%20Admin%20API.md)
+    - [<font color = 'pink'>06-Java管理kafka集群</font>](./mynotes/Kafka/接口/06-Java管理kafka集群.md)
+    - [<font color = 'pink'>AAA-依赖</font>](./mynotes/Kafka/接口/AAA-依赖.md)
 - <font size = '3'>Linux</font>
   - [<font color = 'pink'>BBB-Linux-vim命令</font>](./mynotes/Linux/BBB-Linux-vim命令.md)
 - <font size = '3'>Spring系列</font>

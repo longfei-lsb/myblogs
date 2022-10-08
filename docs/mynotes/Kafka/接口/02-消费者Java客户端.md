@@ -177,3 +177,115 @@ consumer.assign(Arrays.asList(partition0, partition1));
 
 ## 在Kafka之外存储偏移量
 
+消费者可以不使用kafka内置的offset仓库。可以选择自己来存储offset。
+
+需要注意的是：用原子的方式存储结果和offset，但这不能保证原子，要想真正的原子，你需要使用kafka的offset提交功能。
+
+**例子**
+
+- 消费结果和offset存储在`关系数据库`中：让提交结果和offset在单个事务中，要么一起成功，要么一起失败
+- 消费结果和offset存储在`本地仓库`中：可以通过订阅一个指定的分区并将offset和索引数据一起存储来构建一个搜索索引。如果这是以原子的方式做的，常见的可能是，即使崩溃引起未同步的数据丢失。索引程序从它确保没有更新丢失的地方恢复，而仅仅丢失最近更新的消息
+
+每个消息都有自己的offset，所以要管理自己的偏移，你只需要做到以下几点：
+
+- 配置 `enable.auto.commit=false`
+- 使用提供的 `ConsumerRecord` 来保存你的位置。
+- 在重启时用 `seek(TopicPartition, long)` 恢复消费者的位置。
+
+当分区分配也是手动完成的（像上文搜索索引的情况），这种类型的使用是最简单的。
+
+如果分区分配是自动完成的，需要特别小心处理分区分配变更的情况。可以通过调用`subscribe（Collection，ConsumerRebalanceListener）`和`subscribe（Pattern，ConsumerRebalanceListener）`中提供的`ConsumerRebalanceListener`实例来完成的。例如，当消费者需要放弃分区获取时，消费者将通过实现`ConsumerRebalanceListener.onPartitionsRevoked（Collection）`来给这些分区提交它们offset。当分区分配给消费者时，消费者通过`ConsumerRebalanceListener.onPartitionsAssigned(Collection)`为新的分区正确地将消费者初始化到该位置。
+
+`ConsumerRebalanceListener`的另一个常见用法是清除应用已移动到其他位置的分区的缓存。
+
+**例子如下：**
+
+```java
+/**
+  * main：如何自动分配分区给消费者的情况下，去维护在Kafka之外存储的偏移量
+  */
+ static void maintainOutsideOffsetForAutoPartitions() {
+     Properties props = new Properties();
+     props.setProperty("bootstrap.servers", "81.70.52.213:9092");
+     props.setProperty("group.id", "test");
+     props.setProperty("enable.auto.commit", "true");
+     props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+     props.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+     KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+     // 这里加监听器
+     consumer.subscribe(Arrays.asList("my-topic", "topic-test"), new MyTopicConsumerRebalanceListener(consumer, currentOffsets));
+     try {
+         while (true) {
+             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(Long.MAX_VALUE));
+             for (ConsumerRecord<String, String> record : records) {
+                 //消费消息
+                 currentOffsets.put(new TopicPartition(record.topic(), record.partition()), new OffsetAndMetadata(record.offset() + 1));
+             }
+         }
+     } finally {
+         consumer.close();
+     }
+ }
+
+// MyTopicConsumerRebalanceListener
+public class MyTopicConsumerRebalanceListener implements ConsumerRebalanceListener {
+    private final KafkaConsumer<String, String> consumer;
+
+    private final Map<TopicPartition, OffsetAndMetadata> currentOffsets;
+
+    public MyTopicConsumerRebalanceListener(KafkaConsumer<String, String> consumer, Map<TopicPartition, OffsetAndMetadata> currentOffsets) {
+        this.consumer = consumer;
+        this.currentOffsets = currentOffsets;
+    }
+
+    /**
+     * 这个方法会在在均衡开始之前和消费者停止读取消息之后被调用
+     */
+    @Override
+    public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+        //提交消费位移
+        consumer.commitSync(currentOffsets);
+    }
+
+    /**
+     * 这个方法会在重新分配之后和消费者开始读取消费之前被调用
+     */
+    @Override
+    public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+        partitions.forEach(topicPartition -> {
+            consumer.seek(topicPartition, currentOffsets.get(topicPartition));
+        });
+    }
+}
+```
+
+## 控制消费的位置
+
+**大多数情况下**
+
+从头到尾的消费消息，周期性的提交位置（自动或手动）
+
+**几种场景需要自定义消费位置**
+
+1. 消费者对时间敏感
+2. 本地状态存储消费信息（上面说的）
+
+**自定义消费位置**
+
+kafka使用`seek(TopicPartition, long)`指定新的消费位置。用于查找服务器保留的最早和最新的offset的特殊的方法也可用（`seekToBeginning(Collection)` 和 `seekToEnd(Collection)`）。
+
+## 消费者流量控制
+
+如果消费者分配了多个分区，并同时消费所有的分区，这些分区具有相同的优先级。
+
+例如流处理，当处理器从2个topic获取消息并把这两个topic的消息合并，当其中一个topic长时间落后另一个，则暂停消费，以便落后的赶上来。
+
+kafka支持动态控制消费流量，分别在future的`poll(long)`中使用`pause(Collection)` 和 `resume(Collection)` 来暂停消费指定分配的分区，重新开始消费指定暂停的分区。
+
+## 读取事务性消息
+
+// TODO
+
+## 多线程处理
+
+// TODO
