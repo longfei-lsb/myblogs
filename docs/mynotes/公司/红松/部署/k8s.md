@@ -80,5 +80,7 @@ fjkt-hs-fengjin-market-deployment-blue-7c78b4859b-pzwvj           2/2     Runnin
 fjkt-hs-fengjin-market-deployment-blue-7c78b4859b-sg4qh           2/2     Running   0          17h
 fjkt-hs-fengjin-market-deployment-blue-7c78b4859b-wwx5t           2/2     Running   0          17h
 lishanbiao@lishanbiaodeMacBook-Pro ~ % 
+
+kubetail fjkt-hs-fengjin-market-deployment-blue-77c4cc6bc5 -n class
 ```
 
