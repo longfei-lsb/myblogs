@@ -91,6 +91,8 @@
           - [<font color = 'pink'>任务</font>](./mynotes/LSBSpace/公司/红松/参与/leads重构/任务.md)
           - [<font color = 'pink'>杂项</font>](./mynotes/LSBSpace/公司/红松/参与/leads重构/杂项.md)
           - [<font color = 'pink'>正在</font>](./mynotes/LSBSpace/公司/红松/参与/leads重构/正在.md)
+        - <font size = '2'>员工资产管理</font>
+          - [<font color = 'pink'>正在</font>](./mynotes/LSBSpace/公司/红松/参与/员工资产管理/正在.md)
         - <font size = '2'>子客账户</font>
           - [<font color = 'pink'>杂项</font>](./mynotes/LSBSpace/公司/红松/参与/子客账户/杂项.md)
           - [<font color = 'pink'>正在</font>](./mynotes/LSBSpace/公司/红松/参与/子客账户/正在.md)
@@ -114,6 +116,8 @@
     - [<font color = 'pink'>携带物：</font>](./mynotes/LSBSpace/其他/携带物：.md)
     - [<font color = 'pink'>架构</font>](./mynotes/LSBSpace/其他/架构.md)
   - [<font color = 'pink'>其他</font>](./mynotes/LSBSpace/其他.md)
+  - <font size = '2'>操作系统</font>
+    - [<font color = 'pink'>01-相关概述</font>](./mynotes/LSBSpace/操作系统/01-相关概述.md)
   - <font size = '2'>数据库</font>
     - <font size = '3'>MySQL</font>
       - [<font color = 'pink'>00-MySQL锁机制</font>](./mynotes/LSBSpace/数据库/MySQL/00-MySQL锁机制.md)
